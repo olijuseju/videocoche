@@ -1,3 +1,6 @@
+
+
+
 /*Proyecto de control de coche 
  * 
  * Autor: Carlos Atienza Arnas 
@@ -421,56 +424,119 @@ void loop() {
   }else{
     //Calculo de las referencias
     if(Desv<=0){
-      Ref_der=Ref_des*(Desv);
+      Ref_der=Ref_des*-1;
     }else{
       Ref_der=Ref_des;
       }
     if(Desv<=0){
-      Ref_iz=Ref_des*(Desv);
+      Ref_iz=Ref_des*-1;
     }else{
       Ref_iz=Ref_des;
       }            
     //Ajuste de referencia lenta
-    if (abs(M1_ref-Ref_der)<Cm_ref){
-      M1_ref=Ref_der;
-    }else{
-     if (M1_ref < Ref_der){
-      M1_ref=M1_ref+Cm_ref;
+    if(abs(Desv)==1 || abs(Desv)==2){
+      if (abs(M1_ref-Ref_der)<Cm_ref){
+        M1_ref=Ref_der;
+      }else{
+       if (M1_ref < Ref_der){
+        M1_ref=M1_ref+Cm_ref;
+        }
+        if (M1_ref > Ref_der){
+          M1_ref=M1_ref-Cm_ref;
+        }
       }
-      if (M1_ref > Ref_der){
-        M1_ref=M1_ref-Cm_ref;
-      }
-    }
-    if (abs(M2_ref-Ref_iz)<Cm_ref){
-      M2_ref=Ref_iz;
-    }else{
-      if (M2_ref < Ref_iz){
-      M2_ref=M2_ref+Cm_ref;
-      }
-      if (M2_ref > Ref_iz){
-        M2_ref=M2_ref-Cm_ref;
-      }
-    }      
-    if (abs(M3_ref-Ref_iz)<Cm_ref){
-      M3_ref=Ref_iz;
-    }else{
-      if (M3_ref < Ref_iz){
-        M3_ref=M3_ref+Cm_ref;
-      }
-      if (M3_ref > Ref_iz){
-        M3_ref=M3_ref-Cm_ref;
+    }else if(abs(Desv)==3){
+      M1_ref=0;
+    }else {
+      if (abs(M1_ref-Ref_der)<Cm_ref){
+        M1_ref=Ref_der;
+      }else{
+       if (M1_ref < Ref_der){
+        M1_ref=M1_ref+Cm_ref;
+        }
+        if (M1_ref > Ref_der){
+          M1_ref=M1_ref-Cm_ref;
+        }
       }
     }
-    if (abs(M4_ref-Ref_der)<Cm_ref){
-      M4_ref=Ref_der;
+    if(abs(Desv)==1 || abs(Desv)==3){
+      if (abs(M2_ref-Ref_iz)<Cm_ref){
+        M2_ref=Ref_iz;
+      }else{
+        if (M2_ref < Ref_iz){
+        M2_ref=M2_ref+Cm_ref;
+        }
+        if (M2_ref > Ref_iz){
+          M2_ref=M2_ref-Cm_ref;
+        }
+      }
+    }else if(abs(Desv)==2){
+      M2_ref=0;
     }else{
-      if (M4_ref < Ref_der){
+      if (abs(M2_ref-Ref_der)<Cm_ref){
+        M2_ref=Ref_der;
+      }else{
+       if (M2_ref < Ref_der){
+        M2_ref=M2_ref+Cm_ref;
+        }
+        if (M2_ref > Ref_der){
+          M2_ref=M2_ref-Cm_ref;
+        }
+      }
+    }
+    
+    if(abs(Desv)==1 || abs(Desv)==3){
+      if (abs(M3_ref-Ref_iz)<Cm_ref){
+       M3_ref=Ref_iz;
+      }else{
+        if (M3_ref < Ref_iz){
+          M3_ref=M3_ref+Cm_ref;
+        }
+        if (M3_ref > Ref_iz){
+          M3_ref=M3_ref-Cm_ref;
+        }
+      }
+    }else if(abs(Desv)==2){
+      M3_ref=0;
+    }else{
+      if (abs(M3_ref-Ref_der)<Cm_ref){
+        M3_ref=Ref_der;
+      }else{
+       if (M3_ref < Ref_der){
+        M3_ref=M1_ref+Cm_ref;
+        }
+        if (M3_ref > Ref_der){
+          M3_ref=M3_ref-Cm_ref;
+        }
+      }
+    }  
+    
+    if(abs(Desv)==1 || abs(Desv)==2){
+      if (abs(M4_ref-Ref_der)<Cm_ref){
+        M4_ref=Ref_der;
+      }else{
+        if (M4_ref < Ref_der){
+          M4_ref=M4_ref+Cm_ref;
+        }
+        if (M4_ref > Ref_der){
+          M4_ref=M4_ref-Cm_ref;
+        }
+      }
+    }else if(abs(Desv)==3){
+      M4_ref=0;
+    }else{
+      if (abs(M4_ref-Ref_der)<Cm_ref){
+        M4_ref=Ref_der;
+      }else{
+       if (M4_ref < Ref_der){
         M4_ref=M4_ref+Cm_ref;
+        }
+        if (M1_ref > Ref_der){
+          M4_ref=M4_ref-Cm_ref;
+        }
       }
-      if (M4_ref > Ref_der){
-        M4_ref=M4_ref-Cm_ref;
-      }
-    }    
+    }
+        
    
     //Actualizacion PWM
     M1_Ik_1=Actualizamot( M1_ref,  M1_vel,  M1_Ik_1,M1_CM_ch_dir , M1_CM_ch_inv );
