@@ -1,0 +1,41 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=pcbv3
+*Date=16:55:20
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;89.0817;-43.1192;0;Bottom;TXT2
+2;;;114.074;-45.9029;0;Bottom;TXT2
+3;;THT;7.5407;-42.0292;0;Bottom;J2
+4;;;12.0871;-46.4631;0;Bottom;TXT1
+5;;;58.0636;-43.5226;0;Bottom;U1
+6;;;116.071;-30.4287;0;Bottom;TXT2
+7;;;115.978;-40.5391;0;Bottom;TXT2
+8;;THT;93.9007;-45.8392;0;Bottom;V
+9;;;12.1007;-39.2035;0;Bottom;TXT1
+10;;;116.077;-35.6753;0;Bottom;TXT2
+11;;;12.1413;-53.7139;0;Bottom;TXT1
+12;;;116.051;-38.2831;0;Bottom;TXT2
+13;;;12.0871;-51.1284;0;Bottom;TXT1
+14;;;12.1278;-48.7056;0;Bottom;TXT1
+15;;;12.1865;-36.5368;0;Bottom;TXT1
+16;;;116.045;-42.9629;0;Bottom;TXT2
+17;;;116.065;-53.3493;0;Bottom;TXT2
+18;;;114.052;-48.1712;0;Bottom;TXT2
+19;;;89.8304;-45.5167;0;Bottom;TXT2
+20;;THT;104.061;-42.0292;0;Bottom;J1
+21;;;12.1007;-41.5857;0;Bottom;TXT1
+22;1µF;100 mil [THT, electrolytic];31.6707;-22.9792;180;Bottom;C1
+23;;;115.998;-50.9255;0;Bottom;TXT2
+24;;;89.8078;-47.7849;0;Bottom;TXT2
+25;;;12.1729;-43.8958;0;Bottom;TXT1
+26;;;116.204;-32.8756;0;Bottom;TXT2

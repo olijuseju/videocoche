@@ -174,6 +174,7 @@ int test3=0;
 int test4=0;
 
 //-----------------------------------------Interrupciones del encoder-----------------------------------------
+//Aumentar o disminuir poco a poco la referencia de los motores
 void M1_Fnc_encoder_A (){if(digitalRead(M1_encoder_A)==digitalRead(M1_encoder_B)){M1_quad--;}else{M1_quad++;}}
 void M2_Fnc_encoder_A (){if(digitalRead(M2_encoder_A)==digitalRead(M2_encoder_B)){M2_quad--;}else{M2_quad++;}}
 void M3_Fnc_encoder_A (){if(digitalRead(M3_encoder_A)==digitalRead(M3_encoder_B)){M3_quad--;}else{M3_quad++;}}
@@ -185,6 +186,12 @@ void M4_Fnc_encoder_B (){if(digitalRead(M4_encoder_A)==digitalRead(M4_encoder_B)
 
 
 //----------------------------------------Actualizar la Salida del PWM ---------------------------------------------
+/*
+ * Esta función actualiza de velocidad de los motores teniendo en cuenta la referencia obtenida
+ * ref -> Referencia
+ * vel -> Velocidad actual del motor
+ * er -> Error referencia-velocidad
+ */
 float Actualizamot(float ref, float vel, float Ik_1,int chdir, int chfor){
   //Calculo de la accion utilizada
   er=ref-vel;
@@ -224,6 +231,11 @@ float Actualizamot(float ref, float vel, float Ik_1,int chdir, int chfor){
 
 
 //--------------------------------------Cambia la referencia de los motores---------------------------------  
+/*
+ * Esta función actualiza las variables de referencia de dirección y velocidad -> Bton = vel:dir
+ * Ref_des -> velocidad
+ * Desv -> dirección
+ */
   void ActualizaDir(){
   int found = 0;
   int positionS = 1;
@@ -328,6 +340,15 @@ void setup() {
   SerialBT.println("Ready");
 }
 //--------------------------------------------------------Bucle de comunicaciones----------------------------------------
+/*
+ * Recibe un mensaje Btin que contiene la orden y el valor
+ * Órdenes -> St=stop 1 o 0
+ *         -> Ve=Velocidad vel:dir
+ *         -> Ac=Aceleración float < 1
+ *         
+ * Variable Btin -> Recibida por Bluetooth -> OrdBton
+ * Variable Bton -> Órdenes descritas arriba -> Btin - Ord
+ */
 void loop2(void *parameter){
   for(;;){
     if (SerialBT.available()) {    
@@ -404,6 +425,7 @@ void loop() {
   M4_enc_ant=M4_enc_act ;   
  
   if (Stop || millis()<1000){
+    //Cuando redibe St1 se paran todos los motores y la referencia se vuelve 0
     Ref_des=0;  
     Desv=0;
     M1_ref=0;
@@ -423,21 +445,30 @@ void loop() {
     Serial.print(M2_vel) ; Serial.println(" ") ;//*/   
   }else{
     //Calculo de las referencias
+
+    // Si la dirección es -1 los 4 motores giran hacia atrás -> AVANZAR MARCHA ATRÁS
     if(Desv<=0){
       Ref_der=Ref_des*-1;
       Ref_iz=Ref_des*-1;
     }else{
+    // Si la dirección es 1 los 4 motores giran hacia delante -> AVANZAR HACIA DELANTE
       Ref_der=Ref_des;
       Ref_iz=Ref_des;
     }
     if(abs(Desv)==2){
+    // Si la dirección es 2 los 2 motores de la izquierda giran hacia delante -> GIRO A LA IZQUIERDA
       Ref_der=0;
       Ref_iz=Ref_des;
     } else if(abs(Desv)==3){
+    // Si la dirección es 2 los 2 motores de la izquierda giran hacia atrás -> GIRO A LA DERECHA
       Ref_der=0;
       Ref_iz=-Ref_des;
     }     
     //Ajuste de referencia lenta
+    //La referencia no cambia de golpe, sino al ritmo que marca la variable Cm_ref (Aceleración)
+    //Si la diferencia entre la referencia actual y la esperada es menor a Cm_ref, la referencia actual será igual a la esperada
+
+    //Cambio de referencia motor 1
     if (abs(M1_ref-Ref_der)<Cm_ref){
         M1_ref=Ref_der;
     }else{
@@ -448,6 +479,8 @@ void loop() {
           M1_ref=M1_ref-Cm_ref;
       }
     }
+    
+    //Cambio de referencia motor 2
     if (abs(M2_ref-Ref_iz)<Cm_ref){
         M2_ref=Ref_iz;
     }else{
@@ -458,6 +491,8 @@ void loop() {
          M2_ref=M2_ref-Cm_ref;
       }
     }
+    
+    //Cambio de referencia motor 3
     if (abs(M3_ref- Ref_der)<Cm_ref){
        M3_ref=Ref_der;
     }else{
@@ -468,6 +503,8 @@ void loop() {
          M3_ref=M3_ref-Cm_ref;
        }
     } 
+    
+    //Cambio de referencia motor 4
     if (abs(M4_ref-Ref_iz)<Cm_ref){
         M4_ref=Ref_iz;
     }else{
