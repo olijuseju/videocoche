@@ -29,7 +29,7 @@ BluetoothSerial SerialBT;
 #define M1_encoder_B  26
 #define M2_encoder_B  23
 #define M3_encoder_B  33
-#define M4_encoder_B  35
+#define M4_encoder_B  35 //CAMBIAR 
 
 //-----------------------Definiciones comunes-------------------------
 #define resolution  10
@@ -42,7 +42,7 @@ BluetoothSerial SerialBT;
 //Motor 1
   //directo
 #define M1_CM_ch_dir     0
-#define M1_CM_pin_dir    2
+#define M1_CM_pin_dir    2 //CAMBIAR 
   //inverso
 #define M1_CM_ch_inv     1
 #define M1_CM_pin_inv    4

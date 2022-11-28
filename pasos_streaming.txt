@@ -1,0 +1,7 @@
+Instalar Insta360 software  https://onlinemanual.insta360.com/pro2/en-us/basic/prepare/software
+Instalar obs https://obsproject.com/es
+Configurar el video como streaming en Insta360 software y poner la url de obs https://www.youtube.com/watch?v=BnqDWosqrj8
+Montar servidor streaming IONOS (5€ al mes) https://www.ionos.es/?utm_marketchange=entrybanner-com&__hstc=16868838.e77ce5bfc89d79a11f0f8b793e603737.1669027684984.1669027684984.1669027684984.1&__hssc=16868838.2.1669027684984&__hsfp=3275819564&_gl=1*tmfmhe*_ga*OTU0NzMxMTM1LjE2NjkwMjc2ODU.*_ga_29DKNVLRWX*MTY2OTAyNzg3NC4xLjEuMTY2OTAyNzkyNS45LjAuMA..&linkId=hd.btn.changeShop
+Colgar video desde obs a IONOS https://obsproject.com/forum/resources/how-to-set-up-your-own-private-rtmp-server-using-nginx.50/
+Recibir el video y mostrarlo en la app https://www.youtube.com/watch?v=oEgpGv2CF1U
+
