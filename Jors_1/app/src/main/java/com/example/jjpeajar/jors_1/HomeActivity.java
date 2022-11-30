@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         System.out.println(btAdapter.getBondedDevices());
 
-        BluetoothDevice hc05 = btAdapter.getRemoteDevice("C8:C9:A3:FA:18:C6");
+        BluetoothDevice hc05 = btAdapter.getRemoteDevice("0C:DC:7E:CC:47:62");
         try {
             if (hc05.getName().equals("Videocoche")) {
                 btConn.setVisibility(View.VISIBLE);
@@ -154,14 +154,14 @@ public class HomeActivity extends AppCompatActivity {
         btLeft.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dir=2;
-                MandarMensajeBt("Ve2:", vel);
+                MandarMensajeBt("Ve"+ String.valueOf(vel) + ":", 2);
             }
         });
 
         btRight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dir=3;
-                MandarMensajeBt("Ve3:", vel);
+                MandarMensajeBt("Ve"+ String.valueOf(vel) + ":", 3);
             }
         });
 
@@ -195,10 +195,10 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(stop){
                     stop = false;
-                    MandarMensajeBt("St:", 0);
+                    MandarMensajeBt("St", 0);
                 }else{
                     stop = true;
-                    MandarMensajeBt("St:", 1);
+                    MandarMensajeBt("St", 1);
                 }
             }
         });
@@ -286,6 +286,20 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void MandarMensajeBt(String prefijo, float valor){
+        String msg = prefijo + String.valueOf(valor);
+        if(connection){
+            try {
+                OutputStream outputStream = btSocket.getOutputStream();
+                outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            Log.d(TAG, "NO HAY CONEXION CON VIDEOCOCHE");
+        }
+    }
+    private void MandarMensajeBt(String prefijo, int valor){
         String msg = prefijo + String.valueOf(valor);
         if(connection){
             try {
